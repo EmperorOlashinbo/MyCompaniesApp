@@ -39,13 +39,10 @@ android {
 }
 
 dependencies {
-    // Apply BOM first
     implementation(platform(libs.firebase.bom))
 
-    // Firebase dependencies (no version specified, managed by BOM)
     implementation(libs.firebase.database.ktx)
-    // Removed firebase-database (redundant)
-    // Removed firebase-analytics-ktx (optional, remove if not needed)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.coil.compose)
