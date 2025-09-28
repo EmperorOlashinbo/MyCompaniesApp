@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "933432247859",
+    "firebase_url": "https://mycompaniesapp-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mycompaniesapp",
+    "storage_bucket": "mycompaniesapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933432247859:android:285b99c33872f0fafe8546",
+        "android_client_info": {
+          "package_name": "com.example.mycompaniesapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCBsZStYs4LH1AvTkr47xn0a9KPFgUddU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
