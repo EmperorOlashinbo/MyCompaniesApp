@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -48,13 +49,15 @@ data class Company(
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Initialize Firebase if not already initialized
         if (FirebaseApp.getApps(this).isEmpty()) {
             FirebaseApp.initializeApp(this)
         }
         setContent {
             MyCompaniesTheme {
-                Surface(color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    color = MaterialTheme.colorScheme.background,
+                    modifier = Modifier.testTag("MainActivitySurface") // Add test tag
+                ) {
                     VerticalHorizontalScroll()
                 }
             }
@@ -73,11 +76,11 @@ fun VerticalHorizontalScroll() {
     LaunchedEffect(Unit) {
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                println("Data changed: ${snapshot.value}") // Log raw snapshot
+                println("Data changed: ${snapshot.value}")
                 val companyList = mutableListOf<Company>()
                 for (childSnapshot in snapshot.children) {
                     val company = childSnapshot.getValue<Company>()
-                    println("Child data: ${childSnapshot.key} -> $company") // Log each company
+                    println("Child data: ${childSnapshot.key} -> $company")
                     company?.let { companyList.add(it) }
                 }
                 companies = companyList.sortedBy { it.id }
@@ -85,7 +88,7 @@ fun VerticalHorizontalScroll() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                println("Database error: ${databaseError.message}") // Log error
+                println("Database error: ${databaseError.message}")
                 error = databaseError.message
                 loading = false
             }
@@ -114,9 +117,9 @@ fun VerticalHorizontalScroll() {
         }
 
         if (loading) {
-            Box(Modifier.fillMaxSize(), Alignment.Center) { CircularProgressIndicator() }
+            Box(Modifier.fillMaxSize().testTag("loadingIndicator"), Alignment.Center) { CircularProgressIndicator() }
         } else if (error != null) {
-            Box(Modifier.fillMaxSize(), Alignment.Center) { Text("Error: $error", color = Color.Red) }
+            Box(Modifier.fillMaxSize().testTag("errorText"), Alignment.Center) { Text("Error: $error", color = Color.Red) }
         } else {
             LazyColumn {
                 item {
